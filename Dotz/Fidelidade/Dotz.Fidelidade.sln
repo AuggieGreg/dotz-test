@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31313.79
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{345C2522-770C-4FFF-BAA4-396C248AEE47}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4F698B81-7993-469D-A776-B294077636E2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotz.Fidelidade.Api", "src\App\Dotz.Fidelidade.Api\Dotz.Fidelidade.Api.csproj", "{49EDF1EC-EA35-461F-A23A-79590BB8C326}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotz.Fidelidade.Application", "src\Common\Dotz.Fidelidade.Application\Dotz.Fidelidade.Application.csproj", "{304A1E03-C7AB-4670-AFF8-50ECA06BA5A1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotz.Fidelidade.Domain", "src\Common\Dotz.Fidelidade.Domain\Dotz.Fidelidade.Domain.csproj", "{D1501421-F47D-4D6E-A5EF-124E3E2DBF98}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotz.Fidelidade.Infrastructure", "src\Common\Dotz.Fidelidade.Infrastructure\Dotz.Fidelidade.Infrastructure.csproj", "{98704D4B-2323-4020-8740-17A6A14264AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{49EDF1EC-EA35-461F-A23A-79590BB8C326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{49EDF1EC-EA35-461F-A23A-79590BB8C326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{49EDF1EC-EA35-461F-A23A-79590BB8C326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{49EDF1EC-EA35-461F-A23A-79590BB8C326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{304A1E03-C7AB-4670-AFF8-50ECA06BA5A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{304A1E03-C7AB-4670-AFF8-50ECA06BA5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{304A1E03-C7AB-4670-AFF8-50ECA06BA5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{304A1E03-C7AB-4670-AFF8-50ECA06BA5A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1501421-F47D-4D6E-A5EF-124E3E2DBF98}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1501421-F47D-4D6E-A5EF-124E3E2DBF98}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1501421-F47D-4D6E-A5EF-124E3E2DBF98}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1501421-F47D-4D6E-A5EF-124E3E2DBF98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98704D4B-2323-4020-8740-17A6A14264AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98704D4B-2323-4020-8740-17A6A14264AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98704D4B-2323-4020-8740-17A6A14264AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98704D4B-2323-4020-8740-17A6A14264AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{345C2522-770C-4FFF-BAA4-396C248AEE47} = {4F698B81-7993-469D-A776-B294077636E2}
+		{8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0} = {4F698B81-7993-469D-A776-B294077636E2}
+		{49EDF1EC-EA35-461F-A23A-79590BB8C326} = {345C2522-770C-4FFF-BAA4-396C248AEE47}
+		{304A1E03-C7AB-4670-AFF8-50ECA06BA5A1} = {8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0}
+		{D1501421-F47D-4D6E-A5EF-124E3E2DBF98} = {8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0}
+		{98704D4B-2323-4020-8740-17A6A14264AA} = {8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B84C2EFB-2583-4792-B439-CCD83CA68F15}
+	EndGlobalSection
+EndGlobal
