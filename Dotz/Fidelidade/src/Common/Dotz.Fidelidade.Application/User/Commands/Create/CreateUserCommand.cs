@@ -30,11 +30,13 @@ namespace Dotz.Fidelidade.Application.User.Commands.Create
         private readonly IApplicationDbContext _context;
         private readonly IMapper _mapper;
         private readonly IPasswordHashService _passwordHashService;
-        public CreateUserCommandHandler(IApplicationDbContext context, IMapper mapper, IPasswordHashService passwordHashService)
+        private readonly IUserActivationService _userActivationService;
+        public CreateUserCommandHandler(IApplicationDbContext context, IMapper mapper, IPasswordHashService passwordHashService, IUserActivationService userActivationService)
         {
             _context = context;
             _mapper = mapper;
             _passwordHashService = passwordHashService;
+            _userActivationService = userActivationService;
         }
 
         public async Task<ServiceResult<UserDto>> Handle(CreateUserCommand request, CancellationToken cancellationToken)
@@ -47,12 +49,14 @@ namespace Dotz.Fidelidade.Application.User.Commands.Create
                 Email = request.Email,
                 Role = "User",
                 PasswordHash = _passwordHashService.GetHash(request.Password),
-                IsActive = true
+                IsActive = false
             };
 
             await _context.Users.AddAsync(user);
 
             await _context.SaveChangesAsync(cancellationToken);
+
+            _userActivationService.SendActivationCode(user.UserId.Value, user.Name);
 
             return ServiceResult.Success(_mapper.Map<UserDto>(user));
         }

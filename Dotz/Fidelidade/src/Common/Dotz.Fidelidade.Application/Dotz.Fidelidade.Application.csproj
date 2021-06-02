@@ -19,8 +19,4 @@
     <ProjectReference Include="..\Dotz.Fidelidade.Domain\Dotz.Fidelidade.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="User\Interfaces\" />
-  </ItemGroup>
-
 </Project>

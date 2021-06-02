@@ -40,6 +40,8 @@ namespace Dotz.Fidelidade.Application.ApplicationUser.Queries.GetToken
             if (user == null)
                 return ServiceResult.Failed<LoginResponse>(ServiceError.FailedLoginError);
 
+            if (!user.IsActive.GetValueOrDefault())
+                return ServiceResult.Failed<LoginResponse>(ServiceError.UserNotActive);
 
             return ServiceResult.Success(new LoginResponse
             {

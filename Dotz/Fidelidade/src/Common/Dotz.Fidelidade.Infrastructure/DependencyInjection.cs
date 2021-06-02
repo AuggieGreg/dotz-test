@@ -1,13 +1,10 @@
-﻿using System;
-using System.Text;
+﻿using System.Text;
 using Dotz.Fidelidade.Application.Common.Interfaces;
 using Dotz.Fidelidade.Infrastructure.EntityQueriers;
 using Dotz.Fidelidade.Infrastructure.Persistence;
 using Dotz.Fidelidade.Infrastructure.Services;
 using Dotz.Fidelidade.Infrastructure.Services.Handlers;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +14,7 @@ namespace Dotz.Fidelidade.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)//, IWebHostEnvironment environment)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(
@@ -32,6 +29,7 @@ namespace Dotz.Fidelidade.Infrastructure
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<ITokenService, TokenService>();
             services.AddTransient<IPasswordHashService, PasswordHashService>();
+            services.AddTransient<IUserActivationService, UserActivationService>();
 
             services.AddAuthentication(options =>
             {
@@ -55,4 +53,3 @@ namespace Dotz.Fidelidade.Infrastructure
         }
     }
 }
-//dotnet ef migrations add "CreateDb" --project src\Common\Dotz.Fidelidade.Infrastructure --startup-project src\App\Dotz.Fidelidade.Api --output-dir Persistence\Migrations
