@@ -1,4 +1,6 @@
-﻿using Dotz.Fidelidade.Application.Dto;
+﻿using Dotz.Fidelidade.Application.Common.Models;
+using Dotz.Fidelidade.Application.Dto;
+using Dotz.Fidelidade.Application.User.Commands.Activate;
 using Dotz.Fidelidade.Application.User.Commands.Create;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,14 +12,21 @@ using System.Threading.Tasks;
 
 namespace Dotz.Fidelidade.Api.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class UserController : BaseApiController
     {
         [HttpPost]
         public async Task<ActionResult<UserDto>> Post([FromBody] CreateUserCommand user)
         {
             return Ok(await Mediator.Send(user));
+        }
+
+        [HttpPost]
+        [Route("Activate")]
+        public async Task<ActionResult<ServiceResult<ActivateUserResponse>>> Activate([FromBody] ActivateUserCommand activateUserCommand)
+        {
+            return Ok(await Mediator.Send(activateUserCommand));
         }
     }
 }
