@@ -6,6 +6,10 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{345C2522-770C-4FFF-BAA4-396C248AEE47}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4F698B81-7993-469D-A776-B294077636E2}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.yml = docker-compose.yml
+		migration.bat = migration.bat
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0}"
 EndProject
@@ -16,6 +20,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotz.Fidelidade.Domain", "src\Common\Dotz.Fidelidade.Domain\Dotz.Fidelidade.Domain.csproj", "{D1501421-F47D-4D6E-A5EF-124E3E2DBF98}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotz.Fidelidade.Infrastructure", "src\Common\Dotz.Fidelidade.Infrastructure\Dotz.Fidelidade.Infrastructure.csproj", "{98704D4B-2323-4020-8740-17A6A14264AA}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{038CE726-4A68-4B80-92B5-063E02EBCAF3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotz.Fidelidade.Application.UnitTests", "tests\Dotz.Fidelidade.Application.UnitTests\Dotz.Fidelidade.Application.UnitTests.csproj", "{70591748-9196-4350-BAAE-8AD6FF5A4324}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +47,10 @@ Global
 		{98704D4B-2323-4020-8740-17A6A14264AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98704D4B-2323-4020-8740-17A6A14264AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98704D4B-2323-4020-8740-17A6A14264AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70591748-9196-4350-BAAE-8AD6FF5A4324}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70591748-9196-4350-BAAE-8AD6FF5A4324}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70591748-9196-4350-BAAE-8AD6FF5A4324}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70591748-9196-4350-BAAE-8AD6FF5A4324}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -50,6 +62,7 @@ Global
 		{304A1E03-C7AB-4670-AFF8-50ECA06BA5A1} = {8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0}
 		{D1501421-F47D-4D6E-A5EF-124E3E2DBF98} = {8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0}
 		{98704D4B-2323-4020-8740-17A6A14264AA} = {8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0}
+		{70591748-9196-4350-BAAE-8AD6FF5A4324} = {038CE726-4A68-4B80-92B5-063E02EBCAF3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B84C2EFB-2583-4792-B439-CCD83CA68F15}

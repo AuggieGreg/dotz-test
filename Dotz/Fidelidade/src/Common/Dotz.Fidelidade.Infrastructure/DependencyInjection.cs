@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Dotz.Fidelidade.Application.Common.Interfaces;
+using Dotz.Fidelidade.Infrastructure.EntityQueriers;
 using Dotz.Fidelidade.Infrastructure.Persistence;
 using Dotz.Fidelidade.Infrastructure.Services;
 using Dotz.Fidelidade.Infrastructure.Services.Handlers;
@@ -26,9 +27,11 @@ namespace Dotz.Fidelidade.Infrastructure
                 );
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddScoped<IUserEntityQuerier, UserEntityQuerier>();
             services.AddTransient<IHttpClientHandler, HttpClientHandler>();
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<ITokenService, TokenService>();
+            services.AddTransient<IPasswordHashService, PasswordHashService>();
 
             services.AddAuthentication(options =>
             {

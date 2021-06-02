@@ -26,7 +26,7 @@ namespace Dotz.Fidelidade.Application.ApplicationUser.Queries.GetToken
         public async Task<ServiceResult<LoginResponse>> Handle(GetTokenQuery request, CancellationToken cancellationToken)
         {
             var user = new UserDto();
-            user.Id = Guid.NewGuid();
+            user.UserId = Guid.NewGuid();
             user.Name = "change me";
             user.Role = "adm";
 
@@ -37,7 +37,7 @@ namespace Dotz.Fidelidade.Application.ApplicationUser.Queries.GetToken
             return ServiceResult.Success(new LoginResponse
             {
                 User = user,
-                Token = _tokenService.GenerateToken(user.Id.ToString(), user.Role)
+                Token = _tokenService.GenerateToken(user.UserId.ToString(), user.Role)
             });
         }
 
