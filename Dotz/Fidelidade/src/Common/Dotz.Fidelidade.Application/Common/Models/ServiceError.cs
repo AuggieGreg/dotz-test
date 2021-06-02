@@ -50,11 +50,6 @@ namespace Dotz.Fidelidade.Application.Common.Models
         public static ServiceError ForbiddenError => new ServiceError("You are not authorized to call this action.", 998);
 
         /// <summary>
-        /// Use this for unauthorized responses.
-        /// </summary>
-        public static ServiceError FailedLoginError => new ServiceError("Usuário ou senha estão incorretos.", 401);
-
-        /// <summary>
         /// Use this to send a custom error message
         /// </summary>
         public static ServiceError CustomMessage(string errorMessage)
@@ -62,7 +57,7 @@ namespace Dotz.Fidelidade.Application.Common.Models
             return new ServiceError(errorMessage, 997);
         }
 
-        public static ServiceError UserNotFound => new ServiceError("User with this id does not exist", 996);
+        public static ServiceError UserNotFound => new ServiceError("Usuário com este identificador não existe.", 996);
 
         public static ServiceError UserFailedToCreate => new ServiceError("Failed to create User.", 995);
 
@@ -84,6 +79,11 @@ namespace Dotz.Fidelidade.Application.Common.Models
         public static ServiceError ServiceProvider => new ServiceError("Service Provider failed to return as expected.", 600);
 
         public static ServiceError DateTimeFormatError => new ServiceError("Date format is not true. Date format must be like yyyy-MM-dd (2019-07-19)", 500);
+
+        public static ServiceError FailedLoginError => new ServiceError("Usuário ou senha estão incorretos.", 800);
+
+        public static ServiceError UserNotActive => new ServiceError("Usuário não está ativo.", 799);
+
 
         #region Override Equals Operator
 
