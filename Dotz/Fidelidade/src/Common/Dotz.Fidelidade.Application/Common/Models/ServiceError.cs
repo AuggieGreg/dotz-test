@@ -50,6 +50,11 @@ namespace Dotz.Fidelidade.Application.Common.Models
         public static ServiceError ForbiddenError => new ServiceError("You are not authorized to call this action.", 998);
 
         /// <summary>
+        /// Use this for unauthorized responses.
+        /// </summary>
+        public static ServiceError FailedLoginError => new ServiceError("Usuário ou senha estão incorretos.", 401);
+
+        /// <summary>
         /// Use this to send a custom error message
         /// </summary>
         public static ServiceError CustomMessage(string errorMessage)

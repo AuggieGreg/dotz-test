@@ -13,6 +13,8 @@ using Dotz.Fidelidade.Application;
 using Dotz.Fidelidade.Infrastructure;
 using Dotz.Fidelidade.Api.Services;
 using Dotz.Fidelidade.Infrastructure.Persistence;
+using Dotz.Fidelidade.Api.Filters;
+using FluentValidation.AspNetCore;
 
 namespace Dotz.Fidelidade.Api
 {
@@ -28,7 +30,6 @@ namespace Dotz.Fidelidade.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
             services.AddCors();
 
             services.AddDatabaseDeveloperPageExceptionFilter();
@@ -41,6 +42,11 @@ namespace Dotz.Fidelidade.Api
             services.AddInfrastructure(Configuration);
 
             services.AddHealthChecks();
+
+            services.AddControllers(options =>
+                    options.Filters.Add<ApiExceptionFilterAttribute>())
+                .AddFluentValidation();
+
             services.AddHttpClient();
 
             services.AddSwaggerGen(c =>
