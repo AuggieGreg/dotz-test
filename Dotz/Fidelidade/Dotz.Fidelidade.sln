@@ -30,6 +30,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		..\..\.gitignore = ..\..\.gitignore
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dotz.Fidelidade.Domain.UnitTests", "tests\Dotz.Fidelidade.Domain.UnitTests\Dotz.Fidelidade.Domain.UnitTests.csproj", "{E4A7A0C8-97D6-4E46-89B7-787301942542}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{70591748-9196-4350-BAAE-8AD6FF5A4324}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{70591748-9196-4350-BAAE-8AD6FF5A4324}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{70591748-9196-4350-BAAE-8AD6FF5A4324}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4A7A0C8-97D6-4E46-89B7-787301942542}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4A7A0C8-97D6-4E46-89B7-787301942542}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4A7A0C8-97D6-4E46-89B7-787301942542}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4A7A0C8-97D6-4E46-89B7-787301942542}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +74,7 @@ Global
 		{D1501421-F47D-4D6E-A5EF-124E3E2DBF98} = {8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0}
 		{98704D4B-2323-4020-8740-17A6A14264AA} = {8A2CF158-21A8-4DAF-B21E-14CF9C4A8FB0}
 		{70591748-9196-4350-BAAE-8AD6FF5A4324} = {038CE726-4A68-4B80-92B5-063E02EBCAF3}
+		{E4A7A0C8-97D6-4E46-89B7-787301942542} = {038CE726-4A68-4B80-92B5-063E02EBCAF3}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B84C2EFB-2583-4792-B439-CCD83CA68F15}
