@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210603005046_InitialCreate")]
+    [Migration("20210603014031_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -62,7 +62,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserAddress");
+                    b.ToTable("UserAddresses");
                 });
 
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.UserEntity", b =>
@@ -111,7 +111,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
 
                     b.HasKey("UserId");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.UserAddressEntity", b =>

@@ -47,7 +47,7 @@ namespace Dotz.Fidelidade.Application.Common.Models
         /// <summary>
         /// Use this for unauthorized responses.
         /// </summary>
-        public static ServiceError ForbiddenError => new ServiceError("You are not authorized to call this action.", 998);
+        public static ServiceError ForbiddenError => new ServiceError("Você não está autorizado a realizar esta ação.", 998);
 
         /// <summary>
         /// Use this to send a custom error message
@@ -83,6 +83,8 @@ namespace Dotz.Fidelidade.Application.Common.Models
         public static ServiceError FailedLoginError => new ServiceError("Usuário ou senha estão incorretos.", 800);
 
         public static ServiceError UserNotActive => new ServiceError("Usuário não está ativo.", 799);
+
+        public static ServiceError UserAddressNotFound => new ServiceError("Endereço não encontrado para o identificador informado.", 798);
 
 
         #region Override Equals Operator

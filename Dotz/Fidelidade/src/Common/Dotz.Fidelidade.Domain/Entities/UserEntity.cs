@@ -1,6 +1,7 @@
 ﻿using Dotz.Fidelidade.Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Dotz.Fidelidade.Domain.Entities
 {
@@ -9,6 +10,17 @@ namespace Dotz.Fidelidade.Domain.Entities
         public UserEntity()
         {
             UserAddresses = new List<UserAddressEntity>();
+        }
+
+        public UserEntity(Guid? userId, string name, string role, string passwordHash, string email, DateTime? birthDate, bool? isActive) : this()
+        {
+            UserId = userId;
+            Name = name;
+            Role = role;
+            PasswordHash = passwordHash;
+            Email = email;
+            BirthDate = birthDate;
+            IsActive = isActive;
         }
 
         public Guid? UserId { get; set; }
@@ -25,6 +37,32 @@ namespace Dotz.Fidelidade.Domain.Entities
 
         public bool? IsActive { get; set; }
 
-        public IList<UserAddressEntity> UserAddresses { get; set; }
+        public IList<UserAddressEntity> UserAddresses { get; private set; }
+
+        public UserAddressEntity AddOrUpdateAddress(Guid addressId, string postalCode, string address, int? number, string complement, bool isMain, Guid? userId)
+        {
+            if (isMain)
+            {
+                this.UserAddresses.ToList().ForEach(x => x.IsMain = false);
+            }
+
+            var addOrUpdateAddress =  this.UserAddresses.SingleOrDefault(r => r.AddressId == addressId);
+
+            if (addOrUpdateAddress == null)
+            {
+                addOrUpdateAddress = new(addressId, postalCode, address, number, complement, isMain, userId, this);
+                this.UserAddresses.Add(addOrUpdateAddress);
+            }
+            else 
+            {
+                addOrUpdateAddress.PostalCode = postalCode;
+                addOrUpdateAddress.Address = address;
+                addOrUpdateAddress.Number = number;
+                addOrUpdateAddress.Complement = complement;
+                addOrUpdateAddress.IsMain = isMain;
+            }
+
+            return addOrUpdateAddress;
+        }
     }
 }
