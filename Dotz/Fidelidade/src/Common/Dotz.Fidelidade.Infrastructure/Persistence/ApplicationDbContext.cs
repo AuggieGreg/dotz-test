@@ -24,6 +24,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
         }
 
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<UserAddressEntity> UserAddresses { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {
@@ -32,11 +33,11 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
                 switch (entry.State)
                 {
                     case EntityState.Added:
-                        entry.Entity.Creator = _currentUserService.UserId;
+                        entry.Entity.Creator = _currentUserService.UserId.ToString();
                         entry.Entity.CreateDate = _dateTime.Now;
                         break;
                     case EntityState.Modified:
-                        entry.Entity.Modifier = _currentUserService.UserId;
+                        entry.Entity.Modifier = _currentUserService.UserId.ToString();
                         entry.Entity.ModifyDate = _dateTime.Now;
                         break;
                 }

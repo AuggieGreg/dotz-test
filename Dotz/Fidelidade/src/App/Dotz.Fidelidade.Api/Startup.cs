@@ -35,7 +35,7 @@ namespace Dotz.Fidelidade.Api
             services.AddDatabaseDeveloperPageExceptionFilter();
 
             services.AddHttpContextAccessor();
-            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddScoped<ICurrentUserService, CurrentUserService>();
             services.AddScoped<ITokenService, TokenService>();
 
             services.AddApplication();

@@ -36,8 +36,6 @@ namespace Dotz.Fidelidade.Application.User.Commands.Activate
 
             user.IsActive = true;
 
-            _context.Users.Update(user);
-
             await _context.SaveChangesAsync(cancellationToken);
 
             return ServiceResult.Success(new ActivateUserResponse());

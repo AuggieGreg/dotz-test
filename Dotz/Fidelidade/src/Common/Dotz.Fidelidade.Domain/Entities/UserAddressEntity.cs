@@ -9,6 +9,22 @@ namespace Dotz.Fidelidade.Domain.Entities
 {
     public class UserAddressEntity : AuditableEntity
     {
+        public UserAddressEntity()
+        {
+        }
+
+        public UserAddressEntity(Guid? addressId, string postalCode, string address, int? number, string complement, bool isMain, Guid? userId, UserEntity user)
+        {
+            AddressId = addressId;
+            PostalCode = postalCode;
+            Address = address;
+            Number = number;
+            Complement = complement;
+            IsMain = isMain;
+            UserId = userId;
+            User = user;
+        }
+
         public Guid? AddressId { get; set; }
 
         public string PostalCode { get; set; }
