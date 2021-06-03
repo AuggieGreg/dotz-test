@@ -8,6 +8,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<UserEntity> builder)
         {
+            builder.ToTable("User");
             builder.HasKey(k => k.UserId);
             builder.Property(p => p.UserId).ValueGeneratedNever();
 
@@ -29,6 +30,8 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Configurations
 
             builder.Property(t => t.IsActive)
                 .IsRequired();
+
+            builder.HasMany(k => k.UserAddresses);
         }
     }
 }
