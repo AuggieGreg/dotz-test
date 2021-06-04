@@ -6,13 +6,17 @@ namespace Dotz.Fidelidade.Domain.Entities
 {
     public class WalletTransactionEntity : AuditableEntity
     {
-        public WalletTransactionEntity(ProductEntity product, WalletEntity wallet)
+        public WalletTransactionEntity()
+        {
+
+        }
+        public WalletTransactionEntity(ProductEntity product, int quantity, WalletEntity wallet)
         {
             WalletTransactionId = Guid.NewGuid();
             WalletId = wallet.WalletId;
-            Amount = -product.Price;
+            TotalAmount = -(product.Price * quantity);
             TransactionTypeEnum = Enums.TransactionType.Exchange;
-            ProductExchange = new ProductExchangeEntity(product.ProductId, product, this);
+            ProductExchange = new ProductExchangeEntity(quantity, product, this);
             Wallet = wallet;
         }
 
@@ -20,16 +24,16 @@ namespace Dotz.Fidelidade.Domain.Entities
         {
             WalletTransactionId = Guid.NewGuid();
             WalletId = wallet.WalletId;
-            Amount = amount;
+            TotalAmount = amount;
             TransactionTypeEnum = transactionTypeEnum;
-            PartnerCreditEntity = new PartnerCreditEntity();
+            PartnerCreditEntity = new PartnerCreditEntity(partnerId, description, this);
         }
 
         public Guid WalletTransactionId { get; set; }
 
         public Guid WalletId { get; set; }
 
-        public decimal Amount { get; set; }
+        public decimal TotalAmount { get; set; }
 
         public TransactionType TransactionTypeEnum 
         {   
@@ -47,7 +51,6 @@ namespace Dotz.Fidelidade.Domain.Entities
             get;
             private set;
         }
-
 
         public ProductExchangeEntity ProductExchange { get; set; }
 

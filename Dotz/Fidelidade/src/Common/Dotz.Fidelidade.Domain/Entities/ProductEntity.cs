@@ -10,13 +10,13 @@ namespace Dotz.Fidelidade.Domain.Entities
 
         }
 
-        public ProductEntity(Guid productId, string name, decimal price, Guid categoryId, Guid partnerId, ProductCategoryEntity category)
+        public ProductEntity(Guid productId, string name, decimal price, Guid partnerId, ProductCategoryEntity category)
         {
             ProductId = productId;
             Name = name;
             Price = price;
             PartnerId = partnerId;
-            CategoryId = categoryId;
+            CategoryId = category.ProductCategoryId;
             Category = category;
         }
 

@@ -1,5 +1,4 @@
 ﻿using Dotz.Fidelidade.Domain.Common;
-using Dotz.Fidelidade.Domain.Interfaces;
 using System;
 
 namespace Dotz.Fidelidade.Domain.Entities
@@ -11,20 +10,26 @@ namespace Dotz.Fidelidade.Domain.Entities
 
         }
 
-        public ProductExchangeEntity(Guid productId, ProductEntity product, WalletTransactionEntity transaction)
+        public ProductExchangeEntity(int quantity, ProductEntity product, WalletTransactionEntity walletTransaction)
         {
-            WalletTransactionId = transaction.WalletTransactionId;
-            ProductId = productId;
+            ProductExchangeId = walletTransaction.WalletTransactionId;
+            ProductId = product.ProductId;
             Product = product;
-            Transaction = transaction;
+            Quantity = quantity;
+            Price = product.Price;
+            WalletTransaction = walletTransaction;
         }
 
-        public Guid WalletTransactionId { get; set; }
+        public Guid ProductExchangeId { get; set; }
 
         public Guid ProductId { get; set; }
 
+        public int Quantity { get; set; }
+
+        public decimal Price { get; set; }
+
         public ProductEntity Product { get; set; }
 
-        public WalletTransactionEntity Transaction { get; set; }
+        public WalletTransactionEntity WalletTransaction { get; set; }
     }
 }

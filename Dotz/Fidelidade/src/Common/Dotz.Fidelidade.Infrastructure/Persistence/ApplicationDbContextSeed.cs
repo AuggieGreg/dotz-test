@@ -1,4 +1,5 @@
 ﻿using Dotz.Fidelidade.Domain.Entities;
+using Dotz.Fidelidade.Infrastructure.EntityQueriers;
 using Dotz.Fidelidade.Infrastructure.Services;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,10 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
     {
         public static async Task SeedBasicFunctionality(ApplicationDbContext context, PasswordHashService hashService)
         {
-            if (!context.Users.Any())
+            WalletEntity wallet = null;
+            ProductEntity product1 = null;
+            ProductEntity product2 = null;
+            if (!context.Wallets.Any())
             {
                 var userId = Guid.NewGuid();
                 UserEntity user = new UserEntity(userId, "Augusto Gregório Helena", "User", hashService.GetHash("123456"), "augusto@gregorio.com", new DateTime(1991, 05, 25), true);
@@ -20,42 +24,62 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
                 user.AddOrUpdateAddress(Guid.NewGuid(), "12900-999", "Rua teste", 45, "Casa 1", true, userId);
 
                 await context.Users.AddAsync(user);
+
+                wallet = new WalletEntity(userId, new List<WalletTransactionEntity>(), new WalletLoaderService(context));
+
+                wallet.AddPartnerCredit(Guid.NewGuid(), "Compra nas Casas Bahia - TV 50''", 300000);
+                wallet.AddPartnerCredit(Guid.NewGuid(), "Compra na Magalu - Lavadora LG''", 20000);
+                wallet.AddPartnerCredit(Guid.NewGuid(), "Compra em Posto BR - R$ 250,00", 2500);
+                wallet.AddPartnerCredit(Guid.NewGuid(), "Compra em Pague Menos - R$ 500,00", 5000);
             }
 
             if (!context.ProductCategories.Any())
             {
-                var bookCategoryId = Guid.NewGuid();
-                await context.ProductCategories.AddAsync(new ProductCategoryEntity(bookCategoryId, "Livros", null));
-                Guid subCategory = Guid.NewGuid();
-                await context.ProductCategories.AddAsync(new ProductCategoryEntity(subCategory, "Tecnologia", bookCategoryId));
-                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "Domain Driven Design - Eric Evans 3ª Edição", 89000, subCategory, Guid.NewGuid(), null));
+                var bookCategory = new ProductCategoryEntity(Guid.NewGuid(), "Livros", null);
+                await context.ProductCategories.AddAsync(bookCategory);
 
-                subCategory = Guid.NewGuid();
-                await context.ProductCategories.AddAsync(new ProductCategoryEntity(subCategory, "Romance", bookCategoryId));
-                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "In Love", 25000, subCategory, Guid.NewGuid(), null));
+                var subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Tecnologia", bookCategory.ProductCategoryId);
+                await context.ProductCategories.AddAsync(subCategory);
+                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "Domain Driven Design - Eric Evans 3ª Edição", 89000, Guid.NewGuid(), subCategory));
 
-                subCategory = Guid.NewGuid();
-                await context.ProductCategories.AddAsync(new ProductCategoryEntity(subCategory, "Drama", bookCategoryId));
-                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "O Fantasma da Ópera", 25000, subCategory, Guid.NewGuid(), null));
+                subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Romance", bookCategory.ProductCategoryId);
+                await context.ProductCategories.AddAsync(subCategory);
+                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "In Love", 25000, Guid.NewGuid(), subCategory));
+
+                subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Drama", bookCategory.ProductCategoryId);
+                await context.ProductCategories.AddAsync(subCategory);
+                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "O Fantasma da Ópera", 25000, Guid.NewGuid(), subCategory));
 
 
-                subCategory = Guid.NewGuid();
-                await context.ProductCategories.AddAsync(new ProductCategoryEntity(subCategory, "Fantasia", bookCategoryId));
-                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "Harry Potter - O Príncipe Mestiço", 25000, subCategory, Guid.NewGuid(), null));
+                subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Fantasia", bookCategory.ProductCategoryId);
+                await context.ProductCategories.AddAsync(subCategory);
+                product1 = new ProductEntity(Guid.NewGuid(), "Harry Potter - O Príncipe Mestiço", 25000, Guid.NewGuid(), subCategory);
 
-                var cdCategoryId = Guid.NewGuid();
-                await context.ProductCategories.AddAsync(new ProductCategoryEntity(cdCategoryId, "CDs", null));
+                await context.Products.AddAsync(product1);
 
-                subCategory = Guid.NewGuid();
-                await context.ProductCategories.AddAsync(new ProductCategoryEntity(subCategory, "Rock", cdCategoryId));
-                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "Best of 00's Rock Collection", 15000, subCategory, Guid.NewGuid(), null));
+                var cdCategory = new ProductCategoryEntity(Guid.NewGuid(), "CDs", null);
+                await context.ProductCategories.AddAsync(cdCategory);
 
-                subCategory = Guid.NewGuid();
-                await context.ProductCategories.AddAsync(new ProductCategoryEntity(subCategory, "Electro Swing", cdCategoryId));
-                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "Caravan Palace - <|º_º|>", 95000, subCategory, Guid.NewGuid(), null));
+                subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Rock", cdCategory.ProductCategoryId);
+                await context.ProductCategories.AddAsync(subCategory);
+                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "Best of 00's Rock Collection", 15000, Guid.NewGuid(), subCategory));
+
+                subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Electro Swing", cdCategory.ProductCategoryId);
+                await context.ProductCategories.AddAsync(subCategory);
+                product2 = new ProductEntity(Guid.NewGuid(), "Caravan Palace - <|º_º|>", 95000, Guid.NewGuid(), subCategory);
+
+                await context.Products.AddAsync(product2);
             }
 
             await context.SaveChangesAsync();
+
+            if (wallet != null)
+            {
+                wallet.ExchangeNewProduct(product1.ProductId, 1);
+                wallet.ExchangeNewProduct(product2.ProductId, 1);
+                await context.Wallets.AddAsync(wallet);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

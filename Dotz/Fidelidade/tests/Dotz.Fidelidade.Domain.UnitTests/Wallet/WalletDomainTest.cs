@@ -34,7 +34,7 @@ namespace Dotz.Fidelidade.Domain.UnitTests.Wallet
             wallet.AddPartnerCredit(Guid.NewGuid(), "Compra X de teste 3", 5000);
             wallet.AddPartnerCredit(Guid.NewGuid(), "Compra X de teste 3", 5000);
 
-            wallet.ExchangeNewProduct(productId1);
+            wallet.ExchangeNewProduct(productId1, 1);
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace Dotz.Fidelidade.Domain.UnitTests.Wallet
         [TestMethod]
         public void ShouldBeValid_BallanceShouldBeZero()
         {
-            wallet.ExchangeNewProduct(productId3);
+            wallet.ExchangeNewProduct(productId3, 1);
 
             Assert.IsTrue(wallet.Balance == 0);
             Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.NotSet).Count() == 0);
@@ -61,8 +61,8 @@ namespace Dotz.Fidelidade.Domain.UnitTests.Wallet
         [TestMethod]
         public void ShouldBeValid_BallanceShouldBeNegative()
         {
-            wallet.ExchangeNewProduct(productId2);
-            wallet.ExchangeNewProduct(productId3);
+            wallet.ExchangeNewProduct(productId2, 1);
+            wallet.ExchangeNewProduct(productId3, 1);
 
             Assert.IsTrue(wallet.Balance == -10000);
             Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.NotSet).Count() == 0);

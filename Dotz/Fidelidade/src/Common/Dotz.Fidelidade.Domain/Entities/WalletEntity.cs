@@ -4,15 +4,19 @@ using Dotz.Fidelidade.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Dotz.Fidelidade.Domain.Entities
 {
     public class WalletEntity : AuditableEntity
     {
         private readonly IWalletLoaderService _walletLoaderService;
-        public WalletEntity(Guid walletId, IList<WalletTransactionEntity> transactions, IWalletLoaderService walletLoaderService)
+
+        public WalletEntity()
+        {
+            Transactions = new List<WalletTransactionEntity>();
+        }
+
+        public WalletEntity(Guid walletId, IList<WalletTransactionEntity> transactions, IWalletLoaderService walletLoaderService) : this()
         {
             WalletId = walletId;
             Transactions = transactions;
@@ -27,15 +31,17 @@ namespace Dotz.Fidelidade.Domain.Entities
         {
             get
             {
-                return Transactions.Sum(s => s.Amount);
+                return Transactions.Sum(s => s.TotalAmount);
             }
             private set {}
         }
 
-        public WalletTransactionEntity ExchangeNewProduct(Guid productId)
+        public UserEntity User { get; set; }
+
+        public WalletTransactionEntity ExchangeNewProduct(Guid productId, int quantity)
         {
             var product = _walletLoaderService.LoadProduct(productId);
-            var walletTransaction = new WalletTransactionEntity(product, this);
+            var walletTransaction = new WalletTransactionEntity(product, quantity, this);
 
             Transactions.Add(walletTransaction);
 

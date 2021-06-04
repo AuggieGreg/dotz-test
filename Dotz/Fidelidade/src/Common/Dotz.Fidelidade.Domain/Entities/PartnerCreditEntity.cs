@@ -9,7 +9,20 @@ namespace Dotz.Fidelidade.Domain.Entities
 {
     public class PartnerCreditEntity : AuditableEntity
     {
-        public Guid WalletTransactionId { get; set; }
+        public PartnerCreditEntity()
+        {
+
+        }
+
+        public PartnerCreditEntity(Guid partnerId, string description, WalletTransactionEntity walletTransaction) : this()
+        {
+            PartnerCreditId = walletTransaction.WalletTransactionId;
+            PartnerId = partnerId;
+            Description = description;
+            WalletTransaction = walletTransaction;
+        }
+
+        public Guid PartnerCreditId { get; set; }
 
         public Guid PartnerId { get; set; }
 
