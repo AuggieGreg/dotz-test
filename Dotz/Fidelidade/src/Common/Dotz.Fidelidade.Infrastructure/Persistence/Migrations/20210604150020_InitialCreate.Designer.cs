@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210604062231_InitialCreate")]
+    [Migration("20210604150020_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -417,7 +417,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.WalletTransactionEntity", b =>
                 {
                     b.HasOne("Dotz.Fidelidade.Domain.Entities.WalletEntity", "Wallet")
-                        .WithMany("Transactions")
+                        .WithMany("WalletTransactions")
                         .HasForeignKey("WalletId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -437,7 +437,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.WalletEntity", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("WalletTransactions");
                 });
 
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.WalletTransactionEntity", b =>

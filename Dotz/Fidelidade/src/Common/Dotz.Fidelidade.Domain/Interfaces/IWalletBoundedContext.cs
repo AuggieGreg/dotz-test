@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Dotz.Fidelidade.Domain.Interfaces
 {
-    public interface IWalletLoaderService
+    public interface IWalletBoundedContext
     {
-        ProductEntity LoadProduct(Guid productId);
+        IQueryable<WalletEntity> Wallets { get; }
     }
 }

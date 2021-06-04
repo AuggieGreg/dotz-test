@@ -415,7 +415,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.WalletTransactionEntity", b =>
                 {
                     b.HasOne("Dotz.Fidelidade.Domain.Entities.WalletEntity", "Wallet")
-                        .WithMany("Transactions")
+                        .WithMany("WalletTransactions")
                         .HasForeignKey("WalletId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -435,7 +435,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.WalletEntity", b =>
                 {
-                    b.Navigation("Transactions");
+                    b.Navigation("WalletTransactions");
                 });
 
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.WalletTransactionEntity", b =>

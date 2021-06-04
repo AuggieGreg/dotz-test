@@ -9,41 +9,37 @@ namespace Dotz.Fidelidade.Domain.Entities
 {
     public class WalletEntity : AuditableEntity
     {
-        private readonly IWalletLoaderService _walletLoaderService;
-
         public WalletEntity()
         {
-            Transactions = new List<WalletTransactionEntity>();
+            WalletTransactions = new List<WalletTransactionEntity>();
         }
 
-        public WalletEntity(Guid walletId, IList<WalletTransactionEntity> transactions, IWalletLoaderService walletLoaderService) : this()
+        public WalletEntity(Guid walletId, IList<WalletTransactionEntity> transactions) : this()
         {
             WalletId = walletId;
-            Transactions = transactions;
-            _walletLoaderService = walletLoaderService;
+            WalletTransactions = transactions;
         }
 
         public Guid WalletId { get; set; }
 
-        public IList<WalletTransactionEntity> Transactions { get; set; }
+        public IList<WalletTransactionEntity> WalletTransactions { get; set; }
 
         public decimal Balance
         {
             get
             {
-                return Transactions.Sum(s => s.TotalAmount);
+                return WalletTransactions.Sum(s => s.TotalAmount);
             }
             private set {}
         }
 
         public UserEntity User { get; set; }
 
-        public WalletTransactionEntity ExchangeNewProduct(Guid productId, int quantity)
+        public WalletTransactionEntity ExchangeNewProduct(ProductEntity product, int quantity)
         {
-            var product = _walletLoaderService.LoadProduct(productId);
             var walletTransaction = new WalletTransactionEntity(product, quantity, this);
 
-            Transactions.Add(walletTransaction);
+            WalletTransactions.Add(walletTransaction);
 
             return walletTransaction;
         }
@@ -52,7 +48,7 @@ namespace Dotz.Fidelidade.Domain.Entities
         {
             WalletTransactionEntity walletTransaction = new WalletTransactionEntity(amount, TransactionType.Entry, partnerId, description, this);
 
-            Transactions.Add(walletTransaction);
+            WalletTransactions.Add(walletTransaction);
 
             return walletTransaction;
         }

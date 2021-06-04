@@ -11,7 +11,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Configurations
             builder.HasKey(x => x.WalletId);
             builder.Property(p => p.WalletId).ValueGeneratedNever();
 
-            builder.HasMany(k => k.Transactions);
+            builder.HasMany(k => k.WalletTransactions);
 
             builder.HasOne(k => k.User).WithOne().HasForeignKey<WalletEntity>(w => w.WalletId);
         }

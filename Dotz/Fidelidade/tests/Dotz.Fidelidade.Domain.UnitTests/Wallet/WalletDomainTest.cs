@@ -1,5 +1,4 @@
 ﻿using Dotz.Fidelidade.Domain.Entities;
-using Dotz.Fidelidade.Domain.UnitTests.Mocks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -11,63 +10,61 @@ namespace Dotz.Fidelidade.Domain.UnitTests.Wallet
     public class WalletDomainTest
     {
         private readonly WalletEntity wallet;
-        private readonly Guid productId1 = Guid.NewGuid();
-        private readonly Guid productId2 = Guid.NewGuid();
-        private readonly Guid productId3 = Guid.NewGuid();
+        private readonly ProductEntity product1;
+        private readonly ProductEntity product2;
+        private readonly ProductEntity product3;
 
         private readonly ProductCategoryEntity productCategory = new ProductCategoryEntity(Guid.NewGuid(), "Test Category", null);
 
         public WalletDomainTest()
         {
-            var walletLoaderMock = new WalletLoaderServiceMock();
-
-            walletLoaderMock.AddProduct(new ProductEntity(productId1, "Test 1", 10000, productCategory.ProductCategoryId, Guid.NewGuid(), productCategory));
-            walletLoaderMock.AddProduct(new ProductEntity(productId2, "Test 2", 10000, productCategory.ProductCategoryId, Guid.NewGuid(), productCategory));
-            walletLoaderMock.AddProduct(new ProductEntity(productId3, "Test 3", 10000, productCategory.ProductCategoryId, Guid.NewGuid(), productCategory));
+            product1 = new ProductEntity(Guid.NewGuid(), "Test 1", 10000, Guid.NewGuid(), productCategory);
+            product2 = new ProductEntity(Guid.NewGuid(), "Test 2", 10000, Guid.NewGuid(), productCategory);
+            product3 = new ProductEntity(Guid.NewGuid(), "Test 3", 10000, Guid.NewGuid(), productCategory);
 
             var transactions = new List<WalletTransactionEntity>();
 
-            wallet = new(Guid.NewGuid(), transactions, walletLoaderMock);
+            wallet = new(Guid.NewGuid(), transactions);
 
             wallet.AddPartnerCredit(Guid.NewGuid(), "Compra X de teste 1", 5000);
             wallet.AddPartnerCredit(Guid.NewGuid(), "Compra X de teste 2", 5000);
             wallet.AddPartnerCredit(Guid.NewGuid(), "Compra X de teste 3", 5000);
             wallet.AddPartnerCredit(Guid.NewGuid(), "Compra X de teste 3", 5000);
 
-            wallet.ExchangeNewProduct(productId1, 1);
+            wallet.ExchangeNewProduct(product1, 1);
         }
 
         [TestMethod]
         public void ShouldBeValid()
         {
             Assert.IsTrue(wallet.Balance == 10000);
-            Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.NotSet).Count() == 0);
-            Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Entry).Count() == 4);
-            Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Exchange).Count() == 1);
+            Assert.IsTrue(wallet.WalletTransactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.NotSet).Count() == 0);
+            Assert.IsTrue(wallet.WalletTransactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Entry).Count() == 4);
+            Assert.IsTrue(wallet.WalletTransactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Exchange).Count() == 1);
         }
 
 
         [TestMethod]
         public void ShouldBeValid_BallanceShouldBeZero()
         {
-            wallet.ExchangeNewProduct(productId3, 1);
+            wallet.ExchangeNewProduct(product3, 1);
 
             Assert.IsTrue(wallet.Balance == 0);
-            Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.NotSet).Count() == 0);
-            Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Entry).Count() == 4);
-            Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Exchange).Count() == 2);
+            Assert.IsTrue(wallet.WalletTransactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.NotSet).Count() == 0);
+            Assert.IsTrue(wallet.WalletTransactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Entry).Count() == 4);
+            Assert.IsTrue(wallet.WalletTransactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Exchange).Count() == 2);
         }
 
         [TestMethod]
         public void ShouldBeValid_BallanceShouldBeNegative()
         {
-            wallet.ExchangeNewProduct(productId2, 1);
-            wallet.ExchangeNewProduct(productId3, 1);
+            wallet.ExchangeNewProduct(product2, 1);
+            wallet.ExchangeNewProduct(product3, 1);
 
             Assert.IsTrue(wallet.Balance == -10000);
-            Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.NotSet).Count() == 0);
-            Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Entry).Count() == 4);
-            Assert.IsTrue(wallet.Transactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Exchange).Count() == 3);
+            Assert.IsTrue(wallet.WalletTransactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.NotSet).Count() == 0);
+            Assert.IsTrue(wallet.WalletTransactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Entry).Count() == 4);
+            Assert.IsTrue(wallet.WalletTransactions.Where(x => x.TransactionTypeEnum == Enums.TransactionType.Exchange).Count() == 3);
         }
     }
 }

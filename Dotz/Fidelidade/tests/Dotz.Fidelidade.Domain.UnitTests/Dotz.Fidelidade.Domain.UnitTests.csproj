@@ -17,4 +17,8 @@
     <ProjectReference Include="..\..\src\Common\Dotz.Fidelidade.Domain\Dotz.Fidelidade.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Mocks\" />
+  </ItemGroup>
+
 </Project>

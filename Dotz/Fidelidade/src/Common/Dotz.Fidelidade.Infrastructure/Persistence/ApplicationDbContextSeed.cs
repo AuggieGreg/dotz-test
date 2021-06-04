@@ -14,8 +14,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
         public static async Task SeedBasicFunctionality(ApplicationDbContext context, PasswordHashService hashService)
         {
             WalletEntity wallet = null;
-            ProductEntity product1 = null;
-            ProductEntity product2 = null;
+
             if (!context.Wallets.Any())
             {
                 var userId = Guid.NewGuid();
@@ -25,7 +24,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
 
                 await context.Users.AddAsync(user);
 
-                wallet = new WalletEntity(userId, new List<WalletTransactionEntity>(), new WalletLoaderService(context));
+                wallet = new WalletEntity(userId, new List<WalletTransactionEntity>());
 
                 wallet.AddPartnerCredit(Guid.NewGuid(), "Compra nas Casas Bahia - TV 50''", 300000);
                 wallet.AddPartnerCredit(Guid.NewGuid(), "Compra na Magalu - Lavadora LG''", 20000);
@@ -35,12 +34,17 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
 
             if (!context.ProductCategories.Any())
             {
+                ProductEntity currentProduct;
+                ProductCategoryEntity subCategory;
+
                 var bookCategory = new ProductCategoryEntity(Guid.NewGuid(), "Livros", null);
                 await context.ProductCategories.AddAsync(bookCategory);
 
-                var subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Tecnologia", bookCategory.ProductCategoryId);
+                subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Tecnologia", bookCategory.ProductCategoryId);
                 await context.ProductCategories.AddAsync(subCategory);
-                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "Domain Driven Design - Eric Evans 3ª Edição", 89000, Guid.NewGuid(), subCategory));
+                currentProduct = new ProductEntity(Guid.NewGuid(), "Domain Driven Design - Eric Evans 3ª Edição", 89000, Guid.NewGuid(), subCategory);
+                wallet.ExchangeNewProduct(currentProduct, 1);
+                await context.Products.AddAsync(currentProduct);
 
                 subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Romance", bookCategory.ProductCategoryId);
                 await context.ProductCategories.AddAsync(subCategory);
@@ -48,38 +52,34 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
 
                 subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Drama", bookCategory.ProductCategoryId);
                 await context.ProductCategories.AddAsync(subCategory);
-                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "O Fantasma da Ópera", 25000, Guid.NewGuid(), subCategory));
-
+                currentProduct = new ProductEntity(Guid.NewGuid(), "O Fantasma da Ópera", 25000, Guid.NewGuid(), subCategory);
+                await context.Products.AddAsync(currentProduct);
 
                 subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Fantasia", bookCategory.ProductCategoryId);
                 await context.ProductCategories.AddAsync(subCategory);
-                product1 = new ProductEntity(Guid.NewGuid(), "Harry Potter - O Príncipe Mestiço", 25000, Guid.NewGuid(), subCategory);
-
-                await context.Products.AddAsync(product1);
+                currentProduct = new ProductEntity(Guid.NewGuid(), "Harry Potter - O Príncipe Mestiço", 25000, Guid.NewGuid(), subCategory);
+                await context.Products.AddAsync(currentProduct);
 
                 var cdCategory = new ProductCategoryEntity(Guid.NewGuid(), "CDs", null);
                 await context.ProductCategories.AddAsync(cdCategory);
 
                 subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Rock", cdCategory.ProductCategoryId);
                 await context.ProductCategories.AddAsync(subCategory);
-                await context.Products.AddAsync(new ProductEntity(Guid.NewGuid(), "Best of 00's Rock Collection", 15000, Guid.NewGuid(), subCategory));
+                currentProduct = new ProductEntity(Guid.NewGuid(), "Best of 00's Rock Collection", 15000, Guid.NewGuid(), subCategory);
+                await context.Products.AddAsync(currentProduct);
 
                 subCategory = new ProductCategoryEntity(Guid.NewGuid(), "Electro Swing", cdCategory.ProductCategoryId);
                 await context.ProductCategories.AddAsync(subCategory);
-                product2 = new ProductEntity(Guid.NewGuid(), "Caravan Palace - <|º_º|>", 95000, Guid.NewGuid(), subCategory);
+                currentProduct = new ProductEntity(Guid.NewGuid(), "Caravan Palace - <|º_º|>", 95000, Guid.NewGuid(), subCategory);
+                wallet.ExchangeNewProduct(currentProduct, 1);
 
-                await context.Products.AddAsync(product2);
+                await context.Products.AddAsync(currentProduct);
             }
-
-            await context.SaveChangesAsync();
 
             if (wallet != null)
-            {
-                wallet.ExchangeNewProduct(product1.ProductId, 1);
-                wallet.ExchangeNewProduct(product2.ProductId, 1);
                 await context.Wallets.AddAsync(wallet);
-                await context.SaveChangesAsync();
-            }
+
+            await context.SaveChangesAsync();
         }
     }
 }
