@@ -31,7 +31,7 @@ namespace Dotz.Fidelidade.Application.Common.Behaviours
             if (authorizeAttributes.Any())
             {
                 // Must be authenticated user
-                if (_currentUserService.UserId == null)
+                if (_currentUserService.UserId == Guid.Empty)
                 {
                     throw new UnauthorizedAccessException();
                 }

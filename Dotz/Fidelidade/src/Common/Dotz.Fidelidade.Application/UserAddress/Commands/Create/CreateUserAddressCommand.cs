@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace Dotz.Fidelidade.Application.UserAddress.Commands.Create
 {
+    [Authorize(Roles = "User")]
     public class CreateUserAddressCommand : IRequestWrapper<UserAddressDto>
     {
         public string PostalCode { get; set; }

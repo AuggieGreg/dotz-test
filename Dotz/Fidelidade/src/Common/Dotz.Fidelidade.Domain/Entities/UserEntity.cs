@@ -10,6 +10,7 @@ namespace Dotz.Fidelidade.Domain.Entities
         public UserEntity()
         {
             UserAddresses = new List<UserAddressEntity>();
+            ProductOrders = new List<ProductOrderEntity>();
         }
 
         public UserEntity(Guid? userId, string name, string role, string passwordHash, string email, DateTime? birthDate, bool? isActive) : this()
@@ -40,6 +41,8 @@ namespace Dotz.Fidelidade.Domain.Entities
         public WalletEntity Wallet { get; set; }
 
         public IList<UserAddressEntity> UserAddresses { get; private set; }
+
+        public IList<ProductOrderEntity> ProductOrders { get; private set; }
 
         public UserAddressEntity AddOrUpdateAddress(Guid addressId, string postalCode, string address, int? number, string complement, bool isMain, Guid? userId)
         {

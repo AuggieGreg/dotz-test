@@ -67,6 +67,35 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "ProductOrders",
+                columns: table => new
+                {
+                    ProductOrderId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ProductId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    UserId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    ProductExchangeId = table.Column<Guid>(type: "char(36)", nullable: false, collation: "ascii_general_ci"),
+                    DeliveryStatus = table.Column<string>(type: "varchar(20)", maxLength: 20, nullable: false)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Creator = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    CreateDate = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    Modifier = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    ModifyDate = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductOrders", x => x.ProductOrderId);
+                    table.ForeignKey(
+                        name: "FK_ProductOrders_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "ProductId",
+                        onDelete: ReferentialAction.Cascade);
+                })
+                .Annotation("MySql:CharSet", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "ProductExchanges",
                 columns: table => new
                 {
@@ -258,6 +287,21 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
                 column: "WalletTransactionId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductOrders_ProductExchangeId",
+                table: "ProductOrders",
+                column: "ProductExchangeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductOrders_ProductId",
+                table: "ProductOrders",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductOrders_UserId",
+                table: "ProductOrders",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
@@ -276,6 +320,22 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
                 name: "IX_WalletTransactions_WalletId",
                 table: "WalletTransactions",
                 column: "WalletId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ProductOrders_ProductExchanges_ProductExchangeId",
+                table: "ProductOrders",
+                column: "ProductExchangeId",
+                principalTable: "ProductExchanges",
+                principalColumn: "ProductExchangeId",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_ProductOrders_Users_UserId",
+                table: "ProductOrders",
+                column: "UserId",
+                principalTable: "Users",
+                principalColumn: "UserId",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ProductExchanges_WalletTransactions_ProductExchangeId",
@@ -320,10 +380,13 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
                 name: "PartnerCredits");
 
             migrationBuilder.DropTable(
-                name: "ProductExchanges");
+                name: "ProductOrders");
 
             migrationBuilder.DropTable(
                 name: "UserAddresses");
+
+            migrationBuilder.DropTable(
+                name: "ProductExchanges");
 
             migrationBuilder.DropTable(
                 name: "Products");

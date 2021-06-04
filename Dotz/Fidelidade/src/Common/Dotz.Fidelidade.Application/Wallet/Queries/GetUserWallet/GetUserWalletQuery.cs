@@ -1,5 +1,6 @@
 ﻿using Dotz.Fidelidade.Application.Common.Interfaces;
 using Dotz.Fidelidade.Application.Common.Models;
+using Dotz.Fidelidade.Application.Common.Security;
 using Dotz.Fidelidade.Application.Dto;
 using Dotz.Fidelidade.Domain.Interfaces;
 using MapsterMapper;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Dotz.Fidelidade.Application.Wallet.Queries.GetUserWallet
 {
+    [Authorize(Roles = "User")]
     public class GetUserWalletQuery : IRequestWrapper<WalletDto>
     {
 

@@ -31,6 +31,8 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder.HasMany(k => k.UserAddresses);
+
+            builder.HasMany(k => k.ProductOrders);
         }
     }
 }

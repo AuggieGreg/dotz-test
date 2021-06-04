@@ -17,6 +17,7 @@ namespace Dotz.Fidelidade.Application.Common.Interfaces
         public DbSet<ProductExchangeEntity> ProductExchanges { get; set; }
         public DbSet<WalletEntity> Wallets { get; set; }
         public DbSet<WalletTransactionEntity> WalletTransactions { get; set; }
+        public DbSet<ProductOrderEntity> ProductOrders { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 

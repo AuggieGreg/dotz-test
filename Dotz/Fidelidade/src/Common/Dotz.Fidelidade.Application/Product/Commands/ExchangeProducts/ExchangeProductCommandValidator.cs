@@ -12,7 +12,6 @@ namespace Dotz.Fidelidade.Application.Product.Commands.ExchangeProducts
     {
         public ExchangeProductsCommandValidator(IProductQuerier productQuerier)
         {
-            int position = 0;
             RuleFor(f => f.ProductRequests).ForEach(f => f.SetValidator(new ExchangeProductCommandItemValidator(productQuerier)));
         }
     }

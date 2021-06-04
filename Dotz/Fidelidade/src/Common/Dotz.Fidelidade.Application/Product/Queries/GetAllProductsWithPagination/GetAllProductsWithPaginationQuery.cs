@@ -1,18 +1,18 @@
 ﻿using Dotz.Fidelidade.Application.Common.Interfaces;
 using Dotz.Fidelidade.Application.Common.Mapping;
 using Dotz.Fidelidade.Application.Common.Models;
+using Dotz.Fidelidade.Application.Common.Security;
 using Dotz.Fidelidade.Application.Dto;
 using Mapster;
 using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Dotz.Fidelidade.Application.Product.Queries.GetAllProductsWithPagination
 {
+    [Authorize(Roles = "User")]
     public class GetAllProductsWithPaginationQuery : IRequestWrapper<PaginatedList<ProductDto>>
     {
         public Guid? CategoryId { get; set; }

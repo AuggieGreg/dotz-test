@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Linq;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using Dotz.Fidelidade.Application.Common.Interfaces;
@@ -13,14 +14,17 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
     {
         private readonly IDateTime _dateTime;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IDomainEventService _domainEventService;
 
         public ApplicationDbContext(
             DbContextOptions options,
             ICurrentUserService currentUserService,
+            IDomainEventService domainEventService,
             IDateTime dateTime) : base(options)
         {
             _dateTime = dateTime;
             _currentUserService = currentUserService;
+            _domainEventService = domainEventService;
         }
 
         public DbSet<UserEntity> Users { get; set; }
@@ -31,6 +35,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
         public DbSet<ProductExchangeEntity> ProductExchanges { get; set; }
         public DbSet<WalletEntity> Wallets { get; set; }
         public DbSet<WalletTransactionEntity> WalletTransactions { get; set; }
+        public DbSet<ProductOrderEntity> ProductOrders { get; set; }
 
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
@@ -52,7 +57,26 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
 
             var result = await base.SaveChangesAsync(cancellationToken);
 
+            await DispatchEvents();
+
             return result;
+        }
+
+        private async Task DispatchEvents()
+        {
+            while (true)
+            {
+                var domainEventEntity = ChangeTracker
+                    .Entries<IHasDomainEvent>()
+                    .Select(x => x.Entity.DomainEvents)
+                    .SelectMany(x => x)
+                    .FirstOrDefault(domainEvent => !domainEvent.IsPublished);
+
+                if (domainEventEntity == null) break;
+
+                domainEventEntity.IsPublished = true;
+                await _domainEventService.Publish(domainEventEntity);
+            }
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

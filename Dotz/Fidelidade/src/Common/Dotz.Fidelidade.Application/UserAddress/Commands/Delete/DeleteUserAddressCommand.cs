@@ -1,6 +1,7 @@
 ﻿using Dotz.Fidelidade.Application.Common.Exceptions;
 using Dotz.Fidelidade.Application.Common.Interfaces;
 using Dotz.Fidelidade.Application.Common.Models;
+using Dotz.Fidelidade.Application.Common.Security;
 using Dotz.Fidelidade.Domain.Entities;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Dotz.Fidelidade.Application.UserAddress.Commands.Delete
 {
+    [Authorize(Roles = "User")]
     public class DeleteUserAddressCommand : IRequestWrapper<DeleteUserAddressResponse>
     {
         public Guid Id { get; set; }

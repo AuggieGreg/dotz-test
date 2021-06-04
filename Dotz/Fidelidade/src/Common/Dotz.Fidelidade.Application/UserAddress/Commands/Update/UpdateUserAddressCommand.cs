@@ -1,5 +1,6 @@
 ﻿using Dotz.Fidelidade.Application.Common.Interfaces;
 using Dotz.Fidelidade.Application.Common.Models;
+using Dotz.Fidelidade.Application.Common.Security;
 using Dotz.Fidelidade.Application.Dto;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Dotz.Fidelidade.Application.UserAddress.Commands.Update
 {
+    [Authorize(Roles = "User")]
     public class UpdateUserAddressCommand : IRequestWrapper<UserAddressDto>
     {
         public Guid AddressId { get; set; }

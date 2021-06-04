@@ -25,6 +25,8 @@ namespace Dotz.Fidelidade.Infrastructure
                     b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName))
                 );
 
+            services.AddScoped<IDomainEventService, DomainEventService>();
+
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             services.AddScoped<IWalletBoundedContext, WalletBoundedContext>();
             services.AddScoped<IProductQuerier, ProductQuerier>();

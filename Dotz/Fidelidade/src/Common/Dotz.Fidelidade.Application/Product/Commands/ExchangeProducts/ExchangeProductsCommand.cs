@@ -1,18 +1,17 @@
 ﻿using Dotz.Fidelidade.Application.Common.Interfaces;
 using Dotz.Fidelidade.Application.Common.Models;
+using Dotz.Fidelidade.Application.Common.Security;
 using Dotz.Fidelidade.Application.Dto;
 using Dotz.Fidelidade.Domain.Interfaces;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace Dotz.Fidelidade.Application.Product.Commands.ExchangeProducts
 {
+    [Authorize(Roles = "User")]
     public class ExchangeProductsCommand : IRequestWrapper<ExchangedProductsResponse>
     {
         public ExchangeProductsCommand()
@@ -31,10 +30,10 @@ namespace Dotz.Fidelidade.Application.Product.Commands.ExchangeProducts
 
         public ExchangeProductsCommandHandler(IApplicationDbContext context, IWalletBoundedContext walletContext, ICurrentUserService currentUserService, IMapper mapper)
         {
-            this._context = context;
-            this._walletContext = walletContext;
-            this._currentUserService = currentUserService;
-            this._mapper = mapper;
+            _context = context;
+            _walletContext = walletContext;
+            _currentUserService = currentUserService;
+            _mapper = mapper;
         }
         public async Task<ServiceResult<ExchangedProductsResponse>> Handle(ExchangeProductsCommand request, CancellationToken cancellationToken)
         {

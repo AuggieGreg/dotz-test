@@ -162,6 +162,48 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
                     b.ToTable("ProductExchanges");
                 });
 
+            modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.ProductOrderEntity", b =>
+                {
+                    b.Property<Guid>("ProductOrderId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Creator")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("DeliveryStatus")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("varchar(20)");
+
+                    b.Property<string>("Modifier")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<Guid>("ProductExchangeId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("ProductOrderId");
+
+                    b.HasIndex("ProductExchangeId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("ProductOrders");
+                });
+
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.UserAddressEntity", b =>
                 {
                     b.Property<Guid?>("AddressId")
@@ -381,6 +423,33 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
                     b.Navigation("WalletTransaction");
                 });
 
+            modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.ProductOrderEntity", b =>
+                {
+                    b.HasOne("Dotz.Fidelidade.Domain.Entities.ProductExchangeEntity", "ProductExchange")
+                        .WithMany()
+                        .HasForeignKey("ProductExchangeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dotz.Fidelidade.Domain.Entities.ProductEntity", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Dotz.Fidelidade.Domain.Entities.UserEntity", "User")
+                        .WithMany("ProductOrders")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ProductExchange");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.UserAddressEntity", b =>
                 {
                     b.HasOne("Dotz.Fidelidade.Domain.Entities.UserEntity", "User")
@@ -430,6 +499,8 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.UserEntity", b =>
                 {
+                    b.Navigation("ProductOrders");
+
                     b.Navigation("UserAddresses");
                 });
 

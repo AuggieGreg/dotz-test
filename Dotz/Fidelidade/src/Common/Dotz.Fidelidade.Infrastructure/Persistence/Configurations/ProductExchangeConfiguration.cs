@@ -8,6 +8,8 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<ProductExchangeEntity> builder)
         {
+            builder.Ignore(i => i.DomainEvents);
+
             builder.HasKey(k => k.ProductExchangeId);
             builder.Property(p => p.ProductExchangeId).ValueGeneratedNever();
 
