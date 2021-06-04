@@ -1,7 +1,9 @@
 ﻿using System.Text;
 using Dotz.Fidelidade.Application.Common.Interfaces;
+using Dotz.Fidelidade.Domain.Interfaces;
 using Dotz.Fidelidade.Infrastructure.EntityQueriers;
 using Dotz.Fidelidade.Infrastructure.Persistence;
+using Dotz.Fidelidade.Infrastructure.Persistence.BoundedContexts;
 using Dotz.Fidelidade.Infrastructure.Services;
 using Dotz.Fidelidade.Infrastructure.Services.Handlers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -24,6 +26,8 @@ namespace Dotz.Fidelidade.Infrastructure
                 );
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
+            services.AddScoped<IWalletBoundedContext, WalletBoundedContext>();
+            services.AddScoped<IProductQuerier, ProductQuerier>();
             services.AddScoped<IUserEntityQuerier, UserEntityQuerier>();
             services.AddScoped<IProductCategoryRecursiveQuerier, ProductCategoryRecursiveQuerier>();
             services.AddTransient<IHttpClientHandler, HttpClientHandler>();

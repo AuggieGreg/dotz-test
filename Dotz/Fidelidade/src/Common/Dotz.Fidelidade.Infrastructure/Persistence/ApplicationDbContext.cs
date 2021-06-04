@@ -27,6 +27,11 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
         public DbSet<ProductCategoryEntity> ProductCategories{ get; set; }
         public DbSet<ProductEntity> Products { get; set; }
         public DbSet<UserAddressEntity> UserAddresses { get; set; }
+        public DbSet<PartnerCreditEntity> PartnerCredits { get; set; }
+        public DbSet<ProductExchangeEntity> ProductExchanges { get; set; }
+        public DbSet<WalletEntity> Wallets { get; set; }
+        public DbSet<WalletTransactionEntity> WalletTransactions { get; set; }
+
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
         {

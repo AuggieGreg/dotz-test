@@ -37,6 +37,8 @@ namespace Dotz.Fidelidade.Domain.Entities
 
         public bool? IsActive { get; set; }
 
+        public WalletEntity Wallet { get; set; }
+
         public IList<UserAddressEntity> UserAddresses { get; private set; }
 
         public UserAddressEntity AddOrUpdateAddress(Guid addressId, string postalCode, string address, int? number, string complement, bool isMain, Guid? userId)
