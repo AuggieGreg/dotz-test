@@ -24,6 +24,8 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
         }
 
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<ProductCategoryEntity> ProductCategories{ get; set; }
+        public DbSet<ProductEntity> Products { get; set; }
         public DbSet<UserAddressEntity> UserAddresses { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())

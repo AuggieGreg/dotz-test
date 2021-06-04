@@ -17,6 +17,76 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.6");
 
+            modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.ProductCategoryEntity", b =>
+                {
+                    b.Property<Guid>("ProductCategoryId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Creator")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Modifier")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(100)
+                        .HasColumnType("varchar(100)");
+
+                    b.Property<Guid?>("ParentCategoryId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("ProductCategoryId");
+
+                    b.HasIndex("ParentCategoryId");
+
+                    b.ToTable("ProductCategories");
+                });
+
+            modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.ProductEntity", b =>
+                {
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CreateDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Creator")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Modifier")
+                        .HasColumnType("longtext");
+
+                    b.Property<DateTime?>("ModifyDate")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("varchar(200)");
+
+                    b.Property<Guid>("PartnerId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<decimal>("Price")
+                        .HasPrecision(10)
+                        .HasColumnType("decimal(10)");
+
+                    b.HasKey("ProductId");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("Products");
+                });
+
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.UserAddressEntity", b =>
                 {
                     b.Property<Guid?>("AddressId")
@@ -112,6 +182,26 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.ProductCategoryEntity", b =>
+                {
+                    b.HasOne("Dotz.Fidelidade.Domain.Entities.ProductCategoryEntity", "ParentCategory")
+                        .WithMany("ChildCategories")
+                        .HasForeignKey("ParentCategoryId");
+
+                    b.Navigation("ParentCategory");
+                });
+
+            modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.ProductEntity", b =>
+                {
+                    b.HasOne("Dotz.Fidelidade.Domain.Entities.ProductCategoryEntity", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.UserAddressEntity", b =>
                 {
                     b.HasOne("Dotz.Fidelidade.Domain.Entities.UserEntity", "User")
@@ -121,6 +211,11 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.ProductCategoryEntity", b =>
+                {
+                    b.Navigation("ChildCategories");
                 });
 
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.UserEntity", b =>

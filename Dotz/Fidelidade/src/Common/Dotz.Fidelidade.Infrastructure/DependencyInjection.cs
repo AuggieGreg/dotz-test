@@ -25,6 +25,7 @@ namespace Dotz.Fidelidade.Infrastructure
 
             services.AddScoped<IApplicationDbContext>(provider => provider.GetService<ApplicationDbContext>());
             services.AddScoped<IUserEntityQuerier, UserEntityQuerier>();
+            services.AddScoped<IProductCategoryRecursiveQuerier, ProductCategoryRecursiveQuerier>();
             services.AddTransient<IHttpClientHandler, HttpClientHandler>();
             services.AddTransient<IDateTime, DateTimeService>();
             services.AddTransient<ITokenService, TokenService>();

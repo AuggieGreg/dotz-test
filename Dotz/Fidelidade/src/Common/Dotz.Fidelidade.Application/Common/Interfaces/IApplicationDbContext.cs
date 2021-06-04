@@ -9,9 +9,13 @@ namespace Dotz.Fidelidade.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        DbSet<UserEntity> Users { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
 
-        DbSet<UserAddressEntity> UserAddresses{ get; set; }
+        public DbSet<ProductCategoryEntity> ProductCategories { get; set; }
+
+        public DbSet<ProductEntity> Products { get; set; }
+
+        public DbSet<UserAddressEntity> UserAddresses { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);
 
