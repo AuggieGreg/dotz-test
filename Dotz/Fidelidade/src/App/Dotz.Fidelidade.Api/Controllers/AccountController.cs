@@ -12,7 +12,7 @@ namespace Dotz.Fidelidade.Api.Controllers
     {
         [HttpPost]
         [Route("Login")]
-        public async Task<ActionResult<ServiceResult<LoginResponse>>> Login(GetTokenQuery query)
+        public async Task<ActionResult<LoginResponse>> Login(GetTokenQuery query)
         {
             return Ok(await Mediator.Send(query));
         }

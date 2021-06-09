@@ -45,7 +45,7 @@ namespace Dotz.Fidelidade.Application.UserAddress.Commands.Update
                 .Include(x => x.UserAddresses)
                 .SingleAsync(s => s.UserId == _currentUserService.UserId, cancellationToken);
 
-            var addressEntity = user.AddOrUpdateAddress(request.AddressId, request.PostalCode, request.Address, request.Number, request.Complement, request.IsMain, _currentUserService.UserId);
+            var addressEntity = user.AddOrUpdateAddress(request.AddressId, request.PostalCode, request.Address, request.Number, request.Complement, request.IsMain);
 
             await _context.SaveChangesAsync(cancellationToken);
 

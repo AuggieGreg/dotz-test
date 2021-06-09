@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210604204814_InitialCreate")]
+    [Migration("20210609023751_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,7 +254,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.UserEntity", b =>
                 {
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime?>("BirthDate")

@@ -22,9 +22,8 @@ namespace Dotz.Fidelidade.Domain.UnitTests.Wallet
             product2 = new ProductEntity(Guid.NewGuid(), "Test 2", 10000, Guid.NewGuid(), productCategory);
             product3 = new ProductEntity(Guid.NewGuid(), "Test 3", 10000, Guid.NewGuid(), productCategory);
 
-            var transactions = new List<WalletTransactionEntity>();
-
-            wallet = new(Guid.NewGuid(), transactions);
+            var user = new UserEntity("Augusto", "User", "hashtest", "augusto@augusto.mail", DateTime.Now, true);
+            wallet = new(user);
 
             wallet.AddPartnerCredit(Guid.NewGuid(), "Compra X de teste 1", 5000);
             wallet.AddPartnerCredit(Guid.NewGuid(), "Compra X de teste 2", 5000);

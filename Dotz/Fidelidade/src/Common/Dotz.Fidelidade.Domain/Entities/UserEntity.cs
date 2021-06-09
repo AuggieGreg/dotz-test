@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace Dotz.Fidelidade.Domain.Entities
 {
-    public class UserEntity : AuditableEntity
+    public class UserEntity : AuditableEntity, IHasDomainEvent
     {
         public UserEntity()
         {
@@ -13,18 +13,19 @@ namespace Dotz.Fidelidade.Domain.Entities
             ProductOrders = new List<ProductOrderEntity>();
         }
 
-        public UserEntity(Guid? userId, string name, string role, string passwordHash, string email, DateTime? birthDate, bool? isActive) : this()
+        public UserEntity(string name, string role, string passwordHash, string email, DateTime? birthDate, bool? isActive) : this()
         {
-            UserId = userId;
+            UserId = Guid.NewGuid();
             Name = name;
             Role = role;
             PasswordHash = passwordHash;
             Email = email;
             BirthDate = birthDate;
             IsActive = isActive;
+            //create user event dispatch
         }
 
-        public Guid? UserId { get; set; }
+        public Guid UserId { get; set; }
 
         public string Name { get; set; }
 
@@ -44,7 +45,7 @@ namespace Dotz.Fidelidade.Domain.Entities
 
         public IList<ProductOrderEntity> ProductOrders { get; private set; }
 
-        public UserAddressEntity AddOrUpdateAddress(Guid addressId, string postalCode, string address, int? number, string complement, bool isMain, Guid? userId)
+        public UserAddressEntity AddOrUpdateAddress(Guid addressId, string postalCode, string address, int? number, string complement, bool isMain)
         {
             if (isMain)
             {
@@ -55,7 +56,7 @@ namespace Dotz.Fidelidade.Domain.Entities
 
             if (addOrUpdateAddress == null)
             {
-                addOrUpdateAddress = new(addressId, postalCode, address, number, complement, isMain, userId, this);
+                addOrUpdateAddress = new(addressId, postalCode, address, number, complement, isMain, this);
                 this.UserAddresses.Add(addOrUpdateAddress);
             }
             else 

@@ -4,9 +4,6 @@ using Dotz.Fidelidade.Application.Dto;
 using Dotz.Fidelidade.Domain.Entities;
 using MapsterMapper;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -56,7 +53,7 @@ namespace Dotz.Fidelidade.Application.User.Commands.Create
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            _userActivationService.SendActivationCode(user.UserId.Value, user.Name);
+            _userActivationService.SendActivationCode(user.UserId, user.Name);
 
             return ServiceResult.Success(_mapper.Map<UserDto>(user));
         }

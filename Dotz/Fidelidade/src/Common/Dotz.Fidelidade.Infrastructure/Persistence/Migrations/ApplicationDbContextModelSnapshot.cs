@@ -252,7 +252,7 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Dotz.Fidelidade.Domain.Entities.UserEntity", b =>
                 {
-                    b.Property<Guid?>("UserId")
+                    b.Property<Guid>("UserId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime?>("BirthDate")

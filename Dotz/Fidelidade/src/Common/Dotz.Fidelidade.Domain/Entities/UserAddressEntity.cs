@@ -13,7 +13,7 @@ namespace Dotz.Fidelidade.Domain.Entities
         {
         }
 
-        public UserAddressEntity(Guid? addressId, string postalCode, string address, int? number, string complement, bool isMain, Guid? userId, UserEntity user)
+        public UserAddressEntity(Guid? addressId, string postalCode, string address, int? number, string complement, bool isMain, UserEntity user)
         {
             AddressId = addressId;
             PostalCode = postalCode;
@@ -21,7 +21,7 @@ namespace Dotz.Fidelidade.Domain.Entities
             Number = number;
             Complement = complement;
             IsMain = isMain;
-            UserId = userId;
+            UserId = user.UserId;
             User = user;
         }
 

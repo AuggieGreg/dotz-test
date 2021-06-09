@@ -18,13 +18,13 @@ namespace Dotz.Fidelidade.Infrastructure.Persistence
             if (!context.Wallets.Any())
             {
                 var userId = Guid.NewGuid();
-                UserEntity user = new UserEntity(userId, "Augusto Gregório Helena", "User", hashService.GetHash("123456"), "augusto@gregorio.com", new DateTime(1991, 05, 25), true);
-                user.AddOrUpdateAddress(Guid.NewGuid(), "12900-999", "Rua teste", 2, "Casa 2", true, userId);
-                user.AddOrUpdateAddress(Guid.NewGuid(), "12900-999", "Rua teste", 45, "Casa 1", true, userId);
+                UserEntity user = new UserEntity("Augusto Gregório Helena", "User", hashService.GetHash("123456"), "augusto@gregorio.com", new DateTime(1991, 05, 25), true);
+                user.AddOrUpdateAddress(Guid.NewGuid(), "12900-999", "Rua teste", 2, "Casa 2", true);
+                user.AddOrUpdateAddress(Guid.NewGuid(), "12900-999", "Rua teste", 45, "Casa 1", true);
 
                 await context.Users.AddAsync(user);
 
-                wallet = new WalletEntity(userId, new List<WalletTransactionEntity>());
+                wallet = new WalletEntity(user);
 
                 wallet.AddPartnerCredit(Guid.NewGuid(), "Compra nas Casas Bahia - TV 50''", 300000);
                 wallet.AddPartnerCredit(Guid.NewGuid(), "Compra na Magalu - Lavadora LG''", 20000);

@@ -14,10 +14,11 @@ namespace Dotz.Fidelidade.Domain.Entities
             WalletTransactions = new List<WalletTransactionEntity>();
         }
 
-        public WalletEntity(Guid walletId, IList<WalletTransactionEntity> transactions) : this()
+        public WalletEntity(UserEntity user) : this()
         {
-            WalletId = walletId;
-            WalletTransactions = transactions;
+            WalletId = user.UserId;
+            User = user;
+            WalletTransactions = new List<WalletTransactionEntity>();
         }
 
         public Guid WalletId { get; set; }

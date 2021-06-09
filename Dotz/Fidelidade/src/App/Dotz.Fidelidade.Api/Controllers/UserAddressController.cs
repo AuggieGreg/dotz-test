@@ -15,31 +15,31 @@ namespace Dotz.Fidelidade.Api.Controllers
     public class UserAddressController : BaseApiController
     {
         [HttpPost]
-        public async Task<ActionResult<ServiceResult<UserAddressDto>>> Create(CreateUserAddressCommand createUserAddressCommand)
+        public async Task<ActionResult<UserAddressDto>> Create(CreateUserAddressCommand createUserAddressCommand)
         {
             return Ok(await Mediator.Send(createUserAddressCommand));
         }
 
         [HttpPut]
-        public async Task<ActionResult<ServiceResult<UserAddressDto>>> Update(UpdateUserAddressCommand updateUserAddressCommand)
+        public async Task<ActionResult<UserAddressDto>> Update(UpdateUserAddressCommand updateUserAddressCommand)
         {
             return Ok(await Mediator.Send(updateUserAddressCommand));
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ServiceResult<UserAddressDto>>> Get(Guid id)
+        public async Task<ActionResult<UserAddressDto>> Get(Guid id)
         {
             return Ok(await Mediator.Send(new GetUserAddressQuery() { UserAddressId = id }));
         }
 
         [HttpGet()]
-        public async Task<ActionResult<ServiceResult<UserAddressDto>>> Get()
+        public async Task<ActionResult<UserAddressDto>> Get()
         {
             return Ok(await Mediator.Send(new GetAllUserAddressQuery()));
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<ServiceResult<UserAddressDto>>> Delete(Guid id)
+        public async Task<ActionResult<UserAddressDto>> Delete(Guid id)
         {
             return Ok(await Mediator.Send(new DeleteUserAddressCommand() { Id = id }));
         }
